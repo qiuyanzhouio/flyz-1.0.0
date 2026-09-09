@@ -242,6 +242,6 @@ function pretty(str) {
 
 <style scoped>
 .flyz-code-block {
-  @apply bg-black/30 text-ink-200 rounded p-2 text-xs overflow-auto max-h-48 whitespace-pre-wrap break-all;
+  @apply bg-snippet text-ink-200 rounded p-2 text-xs overflow-auto max-h-48 whitespace-pre-wrap break-all;
 }
 </style>

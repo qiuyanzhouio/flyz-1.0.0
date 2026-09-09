@@ -1,7 +1,7 @@
 <template>
   <div ref="formRef" v-bind="$attrs" class="flex flex-wrap gap-y-2 gap-x-2">
     <template v-for="item in visibleColumns" :key="item.key">
-      <div v-if="item.componentsType === 'title'" class="w-full text-left text-[12px] text-slate-200 border-b border-slate-200">
+      <div v-if="item.componentsType === 'title'" class="w-full text-left text-[12px] text-slate-200 border-b border-surface-border py-1">
         {{ item.label }}
       </div>
       <!-- slot 类型: 用户自定义内容 -->
@@ -236,7 +236,7 @@
                  type="checkbox"
                  class="sr-only peer"
                  v-bind="item.nativeAttrs">
-          <span class="relative w-11 h-6 rounded-full bg-white/15 peer-checked:bg-brand-500 transition-all duration-200 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-5 after:h-5 after:bg-white after:rounded-full after:shadow-md after:transition-all after:duration-200 peer-checked:after:translate-x-5 peer-hover:after:scale-110"></span>
+          <span class="relative w-11 h-6 rounded-full bg-overlay-strong peer-checked:bg-brand-500 transition-all duration-200 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-5 after:h-5 after:bg-white after:rounded-full after:shadow-md after:transition-all after:duration-200 peer-checked:after:translate-x-5 peer-hover:after:scale-110"></span>
         </label>
       </FormItem>
     </template>

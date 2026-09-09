@@ -11,7 +11,7 @@
         <!-- 默认模式：带 flyz-dialog-card 包裹 -->
         <transition enter-active-class="animate__animated animate__zoomIn animate__faster" leave-active-class="animate__animated animate__zoomOut animate__faster">
           <div v-if="dialogValue"
-               class="flyz-dialog-card relative w-full bg-surface text-ink-100 rounded-lg shadow-[0_12px_48px_rgba(0,0,0,0.45)] flex flex-col max-h-[calc(100vh-32px)]"
+               class="flyz-dialog-card relative w-full bg-surface text-ink-100 rounded-lg shadow-[var(--c-shadow-lg)] flex flex-col max-h-[calc(100vh-32px)]"
                :style="{ maxWidth: typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth }">
             <div class="flyz-dialog-title flex justify-between items-center flex-wrap gap-2 px-4 py-4 text-base font-semibold text-ink-100">
               <slot name="title">
@@ -19,7 +19,7 @@
               </slot>
               <button v-if="showClose"
                       type="button"
-                      class="bg-transparent border-0 text-ink-400 text-xl leading-none cursor-pointer p-1 rounded transition-colors duration-150 hover:(bg-white/8 text-ink-100)"
+                      class="bg-transparent border-0 text-ink-400 text-xl leading-none cursor-pointer p-1 rounded transition-colors duration-150 hover:(bg-overlay text-ink-100)"
                       aria-label="close"
                       @click="handleClose">
                 <i class="i-mdi-close"></i>
@@ -29,16 +29,16 @@
             <div :class="['flyz-dialog-text overflow-auto px-4 py-4', textClass]">
               <!-- 确认模式：显示图标和消息 -->
               <template v-if="confirmMode">
-                <div class="flex items-start gap-3 overflow-hidden">
-                  <span class="flex-none w-9 h-9 rounded-full bg-white/6 inline-flex items-center justify-center text-2xl leading-none"
+                <div class="flex items-center gap-3 overflow-hidden">
+                  <span class="flex-none w-9 h-9 rounded-full bg-overlay inline-flex items-center justify-center text-2xl leading-none"
                         :style="{ color: confirmIconColor }">
                     <i :class="confirmIconClass"></i>
                   </span>
                   <div class="flex-1">
-                    <div class="text-[15px] font-medium text-ink-100 mb-1">
+                    <div class="text-[15px] font-medium text-ink-100">
                       {{ message }}
                     </div>
-                    <div v-if="description" class="text-xs text-ink-400">
+                    <div v-if="description" class="text-xs text-ink-400 mt-1">
                       {{ description }}
                     </div>
                   </div>

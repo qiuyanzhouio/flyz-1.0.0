@@ -31,6 +31,20 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, reactive, watch } from 'vue'
 import BaseConfirm from '@/components/base-confirm.vue'
+import { useAppStore } from '@/register/stores/app.js'
+
+const appStore = useAppStore()
+
+// 主题同步：将主题模式/主题色写入 html 属性，驱动 CSS 变量切换
+watch(
+  () => [appStore.settings.theme, appStore.settings.themeColor],
+  ([theme, themeColor]) => {
+    const el = document.documentElement
+    el.dataset.theme = theme === 'light' ? 'light' : 'dark'
+    el.dataset.bg = themeColor || 'default'
+  },
+  { immediate: true },
+)
 
 const ICONS = {
   success: 'i-mdi-check-circle',

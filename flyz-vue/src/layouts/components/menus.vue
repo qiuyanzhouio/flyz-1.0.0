@@ -1,101 +1,96 @@
 <template>
-  <transition enter-active-class="animate__animated animate__slideInLeft animate__faster"
-              leave-active-class="animate__animated animate__slideOutLeft animate__faster">
-    <div v-if="appStore.settings.menus"
-         class="h-full overflow-auto"
-         :style="{ width: `${appStore.settings.menus}px` }">
-      <!-- compact mode: 图标 + 悬浮弹出子菜单 -->
-      <div v-if="menuConfig.displayMode === 'compact'" class="flyz-menu-list">
-        <div v-for="item in menuConfig.menuData"
-             :key="item.id"
-             @mouseenter="menuConfig.onCompactEnter(item, $event)"
-             @mouseleave="menuConfig.onCompactLeave">
+  <div class="h-full overflow-auto transition-all duration-300" :style="{ width: `${appStore.settings.menus}px` }" style="transition: all;">
+    <!-- compact mode: 图标 + 悬浮弹出子菜单 -->
+    <div v-if="menuConfig.displayMode === 'compact'" class="flyz-menu-list">
+      <div v-for="item in menuConfig.menuData"
+            :key="item.id"
+            @mouseenter="menuConfig.onCompactEnter(item, $event)"
+            @mouseleave="menuConfig.onCompactLeave">
+        <button type="button"
+                :class="menuConfig.isPrimaryActive(item.id) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
+                :title="item.name"
+                @click="menuConfig.onPrimaryClick(item)">
+          <i :class="['flyz-menu-item-icon', menuConfig.iconClass(item.icon)]"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- tree mode: 树形展开 -->
+    <div v-else-if="menuConfig.displayMode === 'tree'" class="flyz-menu-list">
+      <template v-for="item in menuConfig.menuData" :key="item.id">
+        <div v-if="menuConfig.hasChildren(item)">
           <button type="button"
-                  :class="menuConfig.isPrimaryActive(item.id) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
-                  :title="item.name"
-                  @click="menuConfig.onPrimaryClick(item)">
-            <i :class="['flyz-menu-item-icon', menuConfig.iconClass(item.icon)]"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- tree mode: 树形展开 -->
-      <div v-else-if="menuConfig.displayMode === 'tree'" class="flyz-menu-list">
-        <template v-for="item in menuConfig.menuData" :key="item.id">
-          <div v-if="menuConfig.hasChildren(item)">
-            <button type="button"
-                    :class="['flyz-menu-item flyz-menu-parent', menuConfig.isPrimaryActive(item.id) ? 'flyz-menu-item-active' : '']"
-                    @click="menuConfig.toggleOpen(item.id)">
-              <i :class="['flyz-menu-item-icon flyz-menu-parent-icon', menuConfig.iconClass(item.icon)]"></i>
-              <span class="flyz-menu-item-label">{{ item.name }}</span>
-              <i :class="menuConfig.opened.includes(item.id) ? 'i-mdi-chevron-down flyz-menu-item-caret-open' : 'i-mdi-chevron-right flyz-menu-item-caret'"></i>
-            </button>
-            <transition enter-active-class="animate__animated animate__fadeInLeft animate__faster"
-                        leave-active-class="animate__animated animate__fadeOutLeft animate__faster">
-              <div v-if="menuConfig.opened.includes(item.id)" class="flyz-menu-children">
-                <button v-for="sub in item.children"
-                        :key="sub.id"
-                        type="button"
-                        :class="['flyz-menu-item flyz-menu-child', menuConfig.isSubActive(sub.path) ? 'flyz-menu-item-active' : '']"
-                        @click="menuConfig.onSelectMenu(item, sub)">
-                  <i :class="['flyz-menu-item-icon', menuConfig.iconClass(sub.icon)]"></i>
-                  <span class="flyz-menu-item-label">{{ sub.name }}</span>
-                </button>
-              </div>
-            </transition>
-          </div>
-          <button v-else
-                  type="button"
-                  :class="menuConfig.isSubActive(item.path) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
-                  :title="item.name"
-                  @click="menuConfig.onPrimaryClick(item)">
-            <i :class="['flyz-menu-item-icon', menuConfig.iconClass(item.icon)]"></i>
+                  :class="['flyz-menu-item flyz-menu-parent', menuConfig.isPrimaryActive(item.id) ? 'flyz-menu-item-active' : '']"
+                  @click="menuConfig.toggleOpen(item.id)">
+            <i :class="['flyz-menu-item-icon flyz-menu-parent-icon', menuConfig.iconClass(item.icon)]"></i>
             <span class="flyz-menu-item-label">{{ item.name }}</span>
+            <i :class="menuConfig.opened.includes(item.id) ? 'i-mdi-chevron-down flyz-menu-item-caret-open' : 'i-mdi-chevron-right flyz-menu-item-caret'"></i>
           </button>
-        </template>
-      </div>
-
-      <!-- cascader mode: 双列级联 -->
-      <div v-else class="flyz-menu-cascader">
-        <div class="flyz-menu-list flyz-menu-list-compact">
-          <button v-for="item in menuConfig.menuData"
-                  :key="item.id"
-                  type="button"
-                  :class="menuConfig.isPrimaryActive(item.id) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
-                  :title="item.name"
-                  @click="menuConfig.onPrimaryClick(item)">
-            <i :class="['flyz-menu-item-icon', menuConfig.iconClass(item.icon)]"></i>
-          </button>
-        </div>
-        <div class="flyz-menu-divider"></div>
-        <div class="flyz-menu-list flyz-menu-list-sub flex-grow">
-          <transition mode="out-in"
-                      enter-active-class="animate__animated animate__fadeInRight animate__faster"
+          <transition enter-active-class="animate__animated animate__fadeInLeft animate__faster"
                       leave-active-class="animate__animated animate__fadeOutLeft animate__faster">
-            <div :key="menuConfig.activePrimary?.id || 'empty'" class="flex flex-col gap-0.5">
-              <div v-if="menuConfig.activePrimary" class="flyz-menu-subheader">
-                {{ menuConfig.activePrimary.name }}
-              </div>
-              <button v-if="menuConfig.activePrimary && !menuConfig.hasChildren(menuConfig.activePrimary)"
-                      type="button"
-                      :class="menuConfig.isSubActive(menuConfig.activePrimary.path) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
-                      @click="menuConfig.onSelectMenu(menuConfig.activePrimary, menuConfig.activePrimary)">
-                <span class="flyz-menu-item-label">{{ menuConfig.activePrimary.name }}</span>
-              </button>
-              <button v-for="sub in menuConfig.activePrimaryChildren"
+            <div v-if="menuConfig.opened.includes(item.id)" class="flyz-menu-children">
+              <button v-for="sub in item.children"
                       :key="sub.id"
                       type="button"
-                      :class="menuConfig.isSubActive(sub.path) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
-                      @click="menuConfig.onSelectMenu(menuConfig.activePrimary, sub)">
+                      :class="['flyz-menu-item flyz-menu-child', menuConfig.isSubActive(sub.path) ? 'flyz-menu-item-active' : '']"
+                      @click="menuConfig.onSelectMenu(item, sub)">
                 <i :class="['flyz-menu-item-icon', menuConfig.iconClass(sub.icon)]"></i>
                 <span class="flyz-menu-item-label">{{ sub.name }}</span>
               </button>
             </div>
           </transition>
         </div>
+        <button v-else
+                type="button"
+                :class="menuConfig.isSubActive(item.path) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
+                :title="item.name"
+                @click="menuConfig.onPrimaryClick(item)">
+          <i :class="['flyz-menu-item-icon', menuConfig.iconClass(item.icon)]"></i>
+          <span class="flyz-menu-item-label">{{ item.name }}</span>
+        </button>
+      </template>
+    </div>
+
+    <!-- cascader mode: 双列级联 -->
+    <div v-else class="flyz-menu-cascader">
+      <div class="flyz-menu-list flyz-menu-list-compact">
+        <button v-for="item in menuConfig.menuData"
+                :key="item.id"
+                type="button"
+                :class="menuConfig.isPrimaryActive(item.id) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
+                :title="item.name"
+                @click="menuConfig.onPrimaryClick(item)">
+          <i :class="['flyz-menu-item-icon', menuConfig.iconClass(item.icon)]"></i>
+        </button>
+      </div>
+      <div class="flyz-menu-divider"></div>
+      <div class="flyz-menu-list flyz-menu-list-sub flex-grow">
+        <transition mode="out-in"
+                    enter-active-class="animate__animated animate__fadeInRight animate__faster"
+                    leave-active-class="animate__animated animate__fadeOutLeft animate__faster">
+          <div :key="menuConfig.activePrimary?.id || 'empty'" class="flex flex-col gap-0.5">
+            <div v-if="menuConfig.activePrimary" class="flyz-menu-subheader">
+              {{ menuConfig.activePrimary.name }}
+            </div>
+            <button v-if="menuConfig.activePrimary && !menuConfig.hasChildren(menuConfig.activePrimary)"
+                    type="button"
+                    :class="menuConfig.isSubActive(menuConfig.activePrimary.path) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
+                    @click="menuConfig.onSelectMenu(menuConfig.activePrimary, menuConfig.activePrimary)">
+              <span class="flyz-menu-item-label">{{ menuConfig.activePrimary.name }}</span>
+            </button>
+            <button v-for="sub in menuConfig.activePrimaryChildren"
+                    :key="sub.id"
+                    type="button"
+                    :class="menuConfig.isSubActive(sub.path) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
+                    @click="menuConfig.onSelectMenu(menuConfig.activePrimary, sub)">
+              <i :class="['flyz-menu-item-icon', menuConfig.iconClass(sub.icon)]"></i>
+              <span class="flyz-menu-item-label">{{ sub.name }}</span>
+            </button>
+          </div>
+        </transition>
       </div>
     </div>
-  </transition>
+  </div>
   <!-- mini 模式悬浮子菜单：teleport 到 body，避免被侧栏 overflow 裁剪 -->
   <Teleport to="body">
     <transition enter-active-class="animate__animated animate__fadeIn animate__faster" leave-active-class="animate__animated animate__fadeOut animate__faster">

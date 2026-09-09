@@ -106,7 +106,7 @@
         <!-- 扫码登录 -->
         <div v-show="loginConfig.mode === 'qrcode'"
              class="flex flex-col items-center gap-3 py-3">
-          <div class="w-48 h-48 rounded-lg border border-white/10 bg-white/5 grid place-items-center">
+          <div class="w-48 h-48 rounded-lg border border-overlay-strong bg-field grid place-items-center">
           </div>
           <div class="text-xs text-ink-300">
             {{ qrcodeConfig.hint }}
@@ -143,7 +143,7 @@
           :show-actions="false"
           @update:model-value="v => v || (appStore.serverSettingsDialog = false)">
     <div class="flex flex-col gap-4">
-      <div class="flex items-center gap-1 p-1 rounded-md bg-white/5 border border-white/10 self-start">
+      <div class="flex items-center gap-1 p-1 rounded-md bg-overlay-soft border border-overlay-strong self-start">
         <button type="button"
                 class="flyz-btn"
                 :class="['px-3 py-1.5 rounded text-xs leading-none transition-colors', settingsDialog.tab === 'servers' ? 'flyz-btn-primary' : '']"
@@ -162,7 +162,7 @@
       <div v-show="settingsDialog.tab === 'servers'">
         <div class="mb-2 text-[11px] text-ink-400">
           当前环境已配置 <span class="text-brand-400">{{ appStore.serversConfigMeta.length }}</span> 个服务地址，由
-          <code class="px-1 py-0.5 rounded bg-black/30">VITE_SERVER_LIST</code> 环境变量解析生成。
+          <code class="px-1 py-0.5 rounded bg-snippet">VITE_SERVER_LIST</code> 环境变量解析生成。
         </div>
         <Form ref="serverFormRef"
               :form-columns="settingsDialog.serverColumns"

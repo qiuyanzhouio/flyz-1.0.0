@@ -30,7 +30,7 @@
                 class="flyz-btn min-w-[28px] h-7 px-2 rounded text-xs transition-colors"
                 :class="p.active
                   ? 'bg-brand-500 text-white'
-                  : 'bg-white/6 text-ink-200 hover:(bg-white/12 text-ink-100)'"
+                  : 'bg-overlay text-ink-200 hover:(bg-overlay-strong text-ink-100)'"
                 @click="pager.goTo(p.value)">
           {{ p.value }}
         </button>

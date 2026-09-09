@@ -7,7 +7,7 @@
            @click.self="handleMaskClick">
         <transition :enter-active-class="panelEnterClass" :leave-active-class="panelLeaveClass">
           <div v-if="modelValue"
-               class="flyz-drawer-panel absolute bg-surface text-ink-100 shadow-[0_12px_48px_rgba(0,0,0,0.45)] flex flex-col overflow-auto animate__animated"
+               class="flyz-drawer-panel absolute bg-surface text-ink-100 shadow-[var(--c-shadow-lg)] flex flex-col overflow-auto animate__animated"
                :class="panelLocationClass"
                :style="panelStyle">
             <slot></slot>

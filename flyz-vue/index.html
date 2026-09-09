@@ -5,6 +5,27 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>为匠-控制器管理</title>
+    <script>
+      // 应用挂载前恢复主题，避免刷新时闪回默认暗色
+      ;(() => {
+        try {
+          const raw = localStorage.getItem('pinia-app')
+          if (!raw) {
+            return
+          }
+          const settings = (JSON.parse(raw) || {}).settings
+          if (!settings) {
+            return
+          }
+          document.documentElement.dataset.theme = settings.theme === 'light' ? 'light' : 'dark'
+          document.documentElement.dataset.bg = ['default', 'blue', 'purple', 'green'].includes(settings.themeColor)
+            ? settings.themeColor
+            : 'default'
+        } catch (_e) {
+          // 忽略解析失败，使用默认主题
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>

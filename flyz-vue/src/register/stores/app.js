@@ -60,8 +60,15 @@ function getDefaultSettings() {
     lastMenuWidth: 245,
     tabs: 0,
     footer: 0,
+    // 主题模式：dark（黑夜）| light（白天）
+    theme: 'dark',
+    // 主题色：default（默认）| blue | purple | green
+    themeColor: 'default',
   }
 }
+
+const THEME_VALUES = ['light', 'dark']
+const THEME_COLOR_VALUES = ['default', 'blue', 'purple', 'green']
 
 function normalizeSettings(settings = {}) {
   const toNumber = (val, fallback = 0) => {
@@ -71,6 +78,8 @@ function normalizeSettings(settings = {}) {
     const num = Number(val)
     return Number.isFinite(num) ? num : fallback
   }
+  const toTheme = (val, fallback) => (THEME_VALUES.includes(val) ? val : fallback)
+  const toThemeColor = (val, fallback) => (THEME_COLOR_VALUES.includes(val) ? val : fallback)
 
   const defaults = getDefaultSettings()
   return {
@@ -81,6 +90,8 @@ function normalizeSettings(settings = {}) {
     tabs: toNumber(settings?.tabs, defaults.tabs),
     footer: toNumber(settings?.footer, defaults.footer),
     lastMenuWidth: toNumber(settings?.lastMenuWidth, defaults.lastMenuWidth),
+    theme: toTheme(settings?.theme, defaults.theme),
+    themeColor: toThemeColor(settings?.themeColor, defaults.themeColor),
   }
 }
 
