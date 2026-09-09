@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full min-h-screen grid place-items-center p-4">
-    <div class="flyz-card w-150 p-6">
+    <div class="flyz-dialog-card w-150 p-6">
       <div>
         <div class="flex flex-col items-start gap-2">
           <div class="flex items-center gap-3">
@@ -20,16 +20,11 @@
       </div>
 
       <div class="flex flex-col gap-4">
-        <div class="text-lg font-semibold text-ink-100">
+        <div class="text-lg font-semibold text-ink-100 flex items-center justify-between">
           {{ loginConfig.meta.title }}
-          <button type="button"
-                  class="flyz-icon-btn"
-                  aria-label="服务设置"
-                  @click="appStore.serverSettingsDialog = true">
-            <i class="i-mdi-cog text-lg"></i>
-          </button>
+          <i class="i-mdi-cog cursor-pointer" @click="appStore.serverSettingsDialog = true"></i>
         </div>
-        <div class="flex gap-1">
+        <div class="flex items-center gap-1">
           <div class="flyz-btn flyz-chip-sm"
                :class="[loginConfig.mode === 'password' ? 'flyz-btn-primary' : 'flyz-btn-info']"
                @click="loginConfig.mode = 'password'">

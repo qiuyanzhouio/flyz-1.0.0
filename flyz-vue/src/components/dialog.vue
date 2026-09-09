@@ -56,7 +56,7 @@
               <slot name="actions">
                 <slot name="cancel-btn">
                   <button type="button"
-                          class="flyz-btn flyz-btn-text"
+                          class="flyz-btn flyz-btn-text !p-4"
                           :disabled="confirmLoading"
                           @click="handleCancel">
                     {{ cancelText }}
