@@ -218,18 +218,7 @@ const chartConfig = reactive({
   },
 })
 
-// 监听 series 变化
-watch(
-  () => props.option.series,
-  () => {
-    nextTick(() => {
-      chartConfig.init()
-    })
-  },
-  { deep: true },
-)
-
-// 监听 option 变化
+// 监听 option 变化（deep 已覆盖 series 等嵌套变更，无需重复监听 series）
 watch(
   () => props.option,
   () => {

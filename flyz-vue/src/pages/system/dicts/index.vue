@@ -159,8 +159,8 @@ const typeTable = reactive({
     },
   ],
   headers: [
-    { label: '名称', key: 'name' },
-    { label: '编码', key: 'code' },
+    { label: '名称', key: 'name', width: 90 },
+    { label: '编码', key: 'code', width: 90 },
     { label: '状态', key: 'status', width: 90 },
     { label: '操作', key: 'actions', width: 180 },
   ],
@@ -170,10 +170,9 @@ const typeTable = reactive({
     { id: 3, name: '审核状态', code: 'audit_status', status: 1, sort: 3 },
   ],
   filteredItems: computed(() => typeTable.items.filter(i => {
-    const keyword = typeTable.query?.keyword || ''
-    const status = typeTable.query?.status
+    const { keyword, status } = typeTable.query || {}
     const hitKeyword = !keyword || [i.name, i.code].some(t => String(t).includes(keyword))
-    const hitStatus = status === null || i.status === status
+    const hitStatus = status === undefined || (i.status === status)
     return hitKeyword && hitStatus
   })),
   handleSearch() {
@@ -204,11 +203,11 @@ const itemTable = reactive({
     ],
   },
   headers: [
-    { label: '标签', key: 'label' },
-    { label: '值', key: 'value' },
+    { label: '标签', key: 'label', width: 90 },
+    { label: '值', key: 'value', width: 90 },
     { label: '排序', key: 'sort', width: 80 },
     { label: '状态', key: 'status', width: 90 },
-    { label: '操作', key: 'actions', width: 220 },
+    { label: '操作', key: 'actions', width: 160 },
   ],
   currentType: computed(() => typeTable.items.find(i => i.id === itemTable.currentTypeId)),
   filteredItems: computed(() => {

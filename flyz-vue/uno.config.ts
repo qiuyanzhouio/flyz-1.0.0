@@ -119,7 +119,7 @@ export default defineConfig({
   ],
   shortcuts: {
     // ===== 通用交互控件 =====
-    'flyz-btn': 'inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-md text-sm font-medium bg-surface-raised text-ink-100 border border-solid border-surface-border cursor-pointer transition-colors duration-150 hover:bg-white/14 disabled:opacity-60 disabled:cursor-not-allowed appearance-none',
+    'flyz-btn': 'inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-sm text-sm font-medium bg-surface-raised text-ink-100 border border-solid border-surface-border cursor-pointer transition-colors duration-150 hover:bg-white/14 disabled:opacity-60 disabled:cursor-not-allowed appearance-none',
     'flyz-btn-sm': 'flyz-btn h-8 px-3 text-[13px]',
     'flyz-btn-primary': 'flyz-btn bg-brand-500 text-white border-brand-500 hover:(bg-brand-600 border-brand-600)',
     'flyz-btn-danger': 'flyz-btn bg-err text-white border-err hover:(bg-red-600 border-red-600)',
@@ -133,8 +133,8 @@ export default defineConfig({
     'flyz-btn-spinner': 'inline-block w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin',
 
     // ===== 状态 chip =====
-    'flyz-chip': 'inline-flex items-center h-6 px-2 rounded-xl text-xs font-medium',
-    'flyz-chip-sm': 'inline-flex items-center h-6 px-2.5 rounded-xl text-xs font-medium',
+    'flyz-chip': 'border border-solid bg-brand-600 border-brand-600 inline-flex items-center h-6 px-3 rounded-xl text-xs font-medium',
+    'flyz-chip-sm': 'flyz-chip px-2',
     'flyz-chip-ok': 'flyz-chip bg-ok/20 text-emerald-300',
     'flyz-chip-warn': 'flyz-chip bg-warn/20 text-amber-300',
     'flyz-chip-err': 'flyz-chip bg-err/20 text-red-300',
@@ -146,21 +146,21 @@ export default defineConfig({
     'flyz-chip-error': 'flyz-chip-err',
 
     // ===== 通用面板 =====
-    'flyz-card': 'bg-surface-soft border border-solid border-surface-border rounded-lg',
+    'flyz-card': '',
     'flyz-divider': 'h-px bg-surface-border',
     'flyz-divider-v': 'w-px bg-surface-border self-stretch',
-    'flyz-tabs-scroller': 'overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+    'flyz-tabs-scroller': 'h-full overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
     'flyz-search-highlight': 'text-amber-400 font-bold',
 
     // ===== 文本输入 =====
-    'flyz-input': 'w-full h-9 px-3 rounded-md border border-solid border-white/20 bg-white/5 text-ink-100 text-sm outline-none transition-colors duration-150 placeholder:text-ink-400 focus:(border-brand-500 ring-2 ring-brand-500/25)',
+    'flyz-input': 'w-full h-8 px-3 rounded-sm border border-solid border-white/20 bg-white/5 text-ink-100 text-sm outline-none transition-colors duration-150 placeholder:text-ink-400 focus:(border-brand-500 ring-2 ring-brand-500/25)',
     'flyz-textarea': 'flyz-input h-auto min-h-20 py-2 leading-snug resize-y',
     'flyz-select': 'flyz-input pr-8 appearance-none cursor-pointer',
 
     // ===== 通用布局 =====
     'flyz-page': 'w-full h-full p-2 overflow-hidden',
     'flyz-page-card': 'flyz-card flex-1 overflow-hidden',
-    'flyz-toolbar': 'flyz-card p-4 mb-4 flex items-center justify-between flex-wrap gap-2',
+    'flyz-toolbar': 'flyz-card p-2 mb-2 flex items-center justify-between flex-wrap gap-2',
     'flyz-spacer': 'flex-1',
 
     // ===== 头像 =====
@@ -266,12 +266,12 @@ export default defineConfig({
     'flyz-prompt': 'min-h-[100px]',
     'flyz-prompt-title': 'text-[15px] font-medium text-ink-100 mb-3',
     'flyz-prompt-field': 'flex flex-col gap-1',
-    'flyz-prompt-input': 'w-full h-9 px-3 rounded-md border border-solid border-white/20 bg-white/5 text-ink-100 text-sm outline-none transition-colors duration-150 focus:(border-brand-500 ring-2 ring-brand-500/25)',
+    'flyz-prompt-input': 'w-full h-8 px-3 rounded-sm border border-solid border-white/20 bg-white/5 text-ink-100 text-sm outline-none transition-colors duration-150 focus:(border-brand-500 ring-2 ring-brand-500/25)',
     'flyz-prompt-input-error': 'flyz-prompt-input border-err',
     'flyz-prompt-error': 'text-xs text-red-300',
 
     // ===== Component: Search (搜索) =====
-    'flyz-search-input': 'w-full h-9 px-3 rounded-md border border-solid border-white/15 bg-white/[0.04] text-ink-100 text-sm outline-none transition-colors duration-150 focus:(border-brand-500 ring-2 ring-brand-500/25)',
+    'flyz-search-input': 'w-full h-8 px-3 rounded-sm border border-solid border-white/15 bg-white/[0.04] text-ink-100 text-sm outline-none transition-colors duration-150 focus:(border-brand-500 ring-2 ring-brand-500/25)',
     'flyz-search-divider': 'h-px bg-surface-border',
     'flyz-search-list': 'py-2 px-2 pb-2 overflow-auto',
     'flyz-search-subheader': 'text-[11px] uppercase text-ink-500 px-2.5 py-1.5 font-semibold tracking-[0.5px]',
@@ -308,7 +308,7 @@ export default defineConfig({
     'flyz-chart-empty-title': 'text-sm font-medium',
 
     // ===== 表单统一字段类 =====
-    'flyz-field': 'w-full h-9 px-3 rounded-md border border-solid border-white/20 bg-white/5 text-ink-100 text-sm outline-none transition-colors duration-150 placeholder:text-ink-400 focus:(border-brand-500 ring-2 ring-brand-500/25)',
+    'flyz-field': 'w-full h-8 px-3 rounded-sm border border-solid border-white/20 bg-white/5 text-ink-100 text-sm outline-none transition-colors duration-150 placeholder:text-ink-400 focus:(border-brand-500 ring-2 ring-brand-500/25)',
     'flyz-field-textarea': 'flyz-field h-auto min-h-[60px] py-2 leading-snug resize-y',
     'flyz-field-select': 'flyz-field pr-8 appearance-none cursor-pointer',
     'flyz-field-error': 'border-err focus:(border-err ring-err/25)',

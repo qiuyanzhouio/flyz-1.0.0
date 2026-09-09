@@ -10,13 +10,13 @@
         <button type="button" class="flyz-btn" @click="roleTable.handleSearch">
           查询
         </button>
-        <button type="button" class="flyz-btn flyz-btn-text" @click="roleTable.handleReset">
+        <button type="button" class="flyz-btn flyz-btn-text !p-4" @click="roleTable.handleReset">
           重置
         </button>
       </div>
     </div>
 
-    <div class="flyz-page-card flex flex-col flex-1 min-h-0">
+    <div class="flex flex-col flex-1 min-h-0">
       <div class="flex items-center justify-between px-2 py-2">
         <div class="text-sm font-medium text-ink-100">
           角色列表
@@ -117,9 +117,9 @@ const roleTable = reactive({
   ]),
   headers: [
     { label: 'ID', key: 'id', width: 70 },
-    { label: '角色名称', key: 'name' },
-    { label: '角色编码', key: 'code' },
-    { label: '描述', key: 'description' },
+    { label: '角色名称', key: 'name', width: 120 },
+    { label: '角色编码', key: 'code', width: 120 },
+    { label: '描述', key: 'description', width: 200 },
     { label: '所属部门', key: 'dept_id', width: 140 },
     { label: '排序', key: 'sort', width: 80 },
     { label: '类型', key: 'is_builtin', width: 90 },

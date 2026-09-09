@@ -4,13 +4,12 @@
       <Form ref="queryFormRef"
             :form="listConfig.query"
             :form-columns="listConfig.queryColumns"
-            class="flex-1 flex flex-wrap gap-2"
-            label-direction="inset"></Form>
+            class="flex-1 flex flex-wrap gap-2"></Form>
       <div class="flyz-toolbar-actions flex items-center">
         <button type="button" class="flyz-btn" @click="listConfig.handleSearch">
           查询
         </button>
-        <button type="button" class="flyz-btn flyz-btn-text" @click="listConfig.handleReset">
+        <button type="button" class="flyz-btn flyz-btn-text !px-4" @click="listConfig.handleReset">
           重置
         </button>
       </div>
@@ -150,7 +149,7 @@ const listConfig = reactive({
     { label: '模块', key: 'module', width: 120 },
     { label: '操作', key: 'action', width: 100 },
     { label: '方法', key: 'method', width: 90 },
-    { label: '路径', key: 'path' },
+    { label: '路径', key: 'path', width: 90 },
     { label: '状态', key: 'status', width: 80 },
     { label: 'IP', key: 'ip', width: 130 },
     { label: '耗时', key: 'cost_ms', width: 100 },

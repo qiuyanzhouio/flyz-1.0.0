@@ -2,6 +2,7 @@
   <div class="flyz-page flex flex-col">
     <div class="flyz-toolbar">
       <Form ref="queryFormRef"
+            label-direction="left"
             :form="menuTable.query"
             :form-columns="menuTable.queryColumns"
             class="flex-1 flex flex-wrap gap-2"
@@ -16,7 +17,7 @@
       </div>
     </div>
 
-    <div class="flyz-page-card flex flex-col flex-1 min-h-0">
+    <div class="flex flex-col flex-1 min-h-0">
       <div class="flex items-center justify-between px-2 py-2">
         <div class="text-sm font-medium text-ink-100">
           菜单列表

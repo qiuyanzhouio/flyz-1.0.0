@@ -10,13 +10,13 @@
         <button type="button" class="flyz-btn" @click="deptTable.handleSearch">
           查询
         </button>
-        <button type="button" class="flyz-btn flyz-btn-text" @click="deptTable.handleReset">
+        <button type="button" class="flyz-btn flyz-btn-text !px-4" @click="deptTable.handleReset">
           重置
         </button>
       </div>
     </div>
 
-    <div class="flyz-page-card flex flex-col flex-1 min-h-0">
+    <div class="flex flex-col flex-1 min-h-0">
       <div class="flex items-center justify-between px-2 py-2">
         <div class="text-sm font-medium text-ink-100">
           部门列表
@@ -107,7 +107,7 @@ const deptTable = reactive({
     },
   ]),
   headers: [
-    { label: '部门名称', key: 'name' },
+    { label: '部门名称', key: 'name', width: 90 },
     { label: '部门编码', key: 'code', width: 180 },
     { label: '排序', key: 'sort_order', width: 80 },
     { label: '状态', key: 'status', width: 90 },

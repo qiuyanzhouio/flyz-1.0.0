@@ -10,13 +10,13 @@
         <button type="button" class="flyz-btn" @click="permissionTable.handleSearch">
           查询
         </button>
-        <button type="button" class="flyz-btn flyz-btn-text" @click="permissionTable.handleReset">
+        <button type="button" class="flyz-btn flyz-btn-text !p-4" @click="permissionTable.handleReset">
           重置
         </button>
       </div>
     </div>
 
-    <div class="flyz-page-card flex flex-col flex-1 min-h-0">
+    <div class="flex flex-col flex-1 min-h-0">
       <div class="flex items-center justify-between px-2 py-2">
         <div class="text-sm font-medium text-ink-100">
           权限列表
@@ -126,7 +126,7 @@ const permissionTable = reactive({
     },
   ]),
   headers: [
-    { label: '权限名称', key: 'name' },
+    { label: '权限名称', key: 'name', width: 120 },
     { label: '权限编码', key: 'code', width: 200 },
     { label: '类型', key: 'type', width: 90 },
     { label: '路径', key: 'path', width: 200 },

@@ -30,14 +30,15 @@
               <span class="flyz-menu-item-label">{{ item.name }}</span>
               <i :class="menuConfig.opened.includes(item.id) ? 'i-mdi-chevron-down flyz-menu-item-caret-open' : 'i-mdi-chevron-right flyz-menu-item-caret'"></i>
             </button>
-            <transition enter-active-class="animate__animated animate__fadeInDown animate__faster"
-                        leave-active-class="animate__animated animate__fadeOutUp animate__faster">
+            <transition enter-active-class="animate__animated animate__fadeInLeft animate__faster"
+                        leave-active-class="animate__animated animate__fadeOutLeft animate__faster">
               <div v-if="menuConfig.opened.includes(item.id)" class="flyz-menu-children">
                 <button v-for="sub in item.children"
                         :key="sub.id"
                         type="button"
                         :class="['flyz-menu-item flyz-menu-child', menuConfig.isSubActive(sub.path) ? 'flyz-menu-item-active' : '']"
                         @click="menuConfig.onSelectMenu(item, sub)">
+                  <i :class="['flyz-menu-item-icon', menuConfig.iconClass(sub.icon)]"></i>
                   <span class="flyz-menu-item-label">{{ sub.name }}</span>
                 </button>
               </div>
@@ -86,6 +87,7 @@
                       type="button"
                       :class="menuConfig.isSubActive(sub.path) ? 'flyz-menu-item-active' : 'flyz-menu-item'"
                       @click="menuConfig.onSelectMenu(menuConfig.activePrimary, sub)">
+                <i :class="['flyz-menu-item-icon', menuConfig.iconClass(sub.icon)]"></i>
                 <span class="flyz-menu-item-label">{{ sub.name }}</span>
               </button>
             </div>
@@ -286,7 +288,7 @@ const menuConfig = reactive({
   },
   iconClass(icon) {
     if (!icon) {
-      return 'i-mdi-circle-small'
+      return 'i-mdi-account'
     }
     return icon.startsWith('i-') ? icon : `i-${icon}`
   },

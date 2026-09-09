@@ -11,13 +11,13 @@
         <button type="button" class="flyz-btn" @click="userTable.handleSearch">
           查询
         </button>
-        <button type="button" class="flyz-btn flyz-btn-text" @click="userTable.handleReset">
+        <button type="button" class="flyz-btn flyz-btn-text !p-4" @click="userTable.handleReset">
           重置
         </button>
       </div>
     </div>
 
-    <div class="flyz-page-card flex flex-col flex-1 min-h-0">
+    <div class="flex flex-col flex-1 min-h-0">
       <!-- 工具栏：新增 -->
       <div class="flex items-center justify-between px-2 py-2">
         <div class="text-sm font-medium text-ink-100">
@@ -136,9 +136,9 @@ const userTable = reactive({
   ]),
   headers: [
     { label: 'ID', key: 'id', width: 70 },
-    { label: '用户名', key: 'username' },
-    { label: '昵称', key: 'nickname' },
-    { label: '邮箱', key: 'email' },
+    { label: '用户名', key: 'username', width: 70 },
+    { label: '昵称', key: 'nickname', width: 70 },
+    { label: '邮箱', key: 'email', width: 70 },
     { label: '状态', key: 'status', width: 90 },
     { label: '创建时间', key: 'created_at', width: 170 },
     { label: '操作', key: 'actions', width: 220 },

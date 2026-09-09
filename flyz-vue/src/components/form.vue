@@ -23,7 +23,7 @@
         <CodeEditor v-model="form[item.key]"
                     :initial-language="form[item.key + '_language']"
                     :full="false"
-                    v-bind="nativeAttrs(item)"></CodeEditor>
+                    v-bind="item.nativeAttrs"></CodeEditor>
       </FormItem>
 
       <!-- radio 类型: 原生 HTML radio -->
@@ -39,7 +39,7 @@
                  type="radio"
                  :name="it[item.itemTitle]"
                  :value="it[item.itemValue]"
-                 v-bind="nativeAttrs(item)">
+                 v-bind="item.nativeAttrs">
           {{ it[item.itemTitle] }}
         </label>
       </FormItem>
@@ -73,7 +73,7 @@
                :type="item.type"
                :class="['flex-1 flyz-field', item.type === 'datetime-local' ? '[&::-webkit-calendar-picker-indicator]:cursor-pointer' : '']"
                :placeholder="item.placeholder || '...'"
-               v-bind="nativeAttrs(item)">
+               v-bind="item.nativeAttrs">
       </FormItem>
 
       <!-- v-textarea 类型: 原生 HTML textarea -->
@@ -86,7 +86,7 @@
                   :class="['flex-1 flyz-field-textarea', { 'auto-grow': item.autoGrow }]"
                   :placeholder="item.placeholder || '...'"
                   rows="3"
-                  v-bind="nativeAttrs(item)">
+                  v-bind="item.nativeAttrs">
         </textarea>
       </FormItem>
 
@@ -100,7 +100,7 @@
                type="number"
                class="flex-1 flyz-field"
                :placeholder="item.placeholder || '...'"
-               v-bind="nativeAttrs(item)">
+               v-bind="item.nativeAttrs">
       </FormItem>
 
       <!-- v-select 类型: 原生 HTML select / 多选下拉 -->
@@ -140,7 +140,7 @@
              :data-placeholder="item.placeholder || '请选择'">
           <select v-model="form[item.key]"
                   class="flyz-field-select"
-                  v-bind="nativeAttrs(item)">
+                  v-bind="item.nativeAttrs">
             <option v-for="(it, itIndex) in item.items"
                     :key="itIndex"
                     :value="it[item.itemValue]">
@@ -188,7 +188,7 @@
                 :error="validation.errors[item.key]">
         <input type="file"
                class="flex-1 flyz-field"
-               v-bind="nativeAttrs(item)">
+               v-bind="item.nativeAttrs">
       </FormItem>
 
       <!-- v-otp-input 类型: 原生 HTML otp input -->
@@ -235,7 +235,7 @@
           <input v-model="form[item.key]"
                  type="checkbox"
                  class="sr-only peer"
-                 v-bind="nativeAttrs(item)">
+                 v-bind="item.nativeAttrs">
           <span class="relative w-11 h-6 rounded-full bg-white/15 peer-checked:bg-brand-500 transition-all duration-200 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-5 after:h-5 after:bg-white after:rounded-full after:shadow-md after:transition-all after:duration-200 peer-checked:after:translate-x-5 peer-hover:after:scale-110"></span>
         </label>
       </FormItem>
@@ -262,18 +262,19 @@ const props = defineProps({
     default: () => [],
   },
   form: { type: Object, default: () => ({}) },
-  labelDirection: { type: String, default: 'top' },
+  labelDirection: { type: String, default: 'left' },
 })
 
 const emit = defineEmits(['update:form', 'update:validate'])
 const form = useVModel(props, 'form', emit)
 const formRef = ref()
 
+// 预计算原生属性并缓存到列对象，避免模板每次渲染重复调用生成新对象
 const visibleColumns = computed(() => {
   return props.formColumns.filter(item => !item?.hidden).map(item => ({
     ...item,
     label: item.label || item.key || '',
-    placeholder: item.placeholder || `请输入${item.label || item.key || '-'}`,
+    nativeAttrs: nativeAttrs(item),
   }))
 })
 
