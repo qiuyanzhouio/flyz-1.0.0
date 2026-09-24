@@ -11,6 +11,27 @@ import { defineConfig, loadEnv } from 'vite'
 import Layouts from 'vite-plugin-vue-layouts-next'
 import viteArchiverFile from './vite.archiver.js'
 
+// 临时诊断插件：对比 watcher 路径与模块图 file 键
+function debugHmrPlugin() {
+  return {
+    name: 'debug-hmr',
+    configureServer(server) {
+      server.watcher.on('change', (file) => {
+        if (!file.includes('.vue') && !file.includes('.css')) return
+        console.log('=== [watcher-change] file =', file)
+        const norm = file.replace(/\\/g, '/')
+        const direct = server.moduleGraph.getModulesByFile(norm)
+        console.log('=== [matched-direct]', direct?.length || 0)
+        const keys = [...server.moduleGraph.fileToModulesMap.keys()]
+        const near = keys.filter(k => k.toLowerCase().includes('settings.vue'))
+        console.log('=== [graph-keys-near]', JSON.stringify(near))
+        const cssKeys = keys.filter(k => k.toLowerCase().includes('index.css'))
+        console.log('=== [graph-keys-css]', JSON.stringify(cssKeys))
+      })
+    },
+  }
+}
+
 export default ({ mode, command }) => {
   const envDir = './'
   const env = loadEnv(mode, envDir)
@@ -40,6 +61,7 @@ export default ({ mode, command }) => {
     base: basePath,
     envDir,
     plugins: [
+      debugHmrPlugin(),
       VueRouter({
         routesFolder: 'src/pages',
         exclude: [

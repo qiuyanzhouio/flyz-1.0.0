@@ -113,7 +113,7 @@ export default function () {
         console.log(`📁 请在 ${distsDir} 目录下查找 ${zipFileName}`)
 
         // 清理dist目录
-        removeDir(distDir)
+        // removeDir(distDir)
       })
 
       // 开始压缩
